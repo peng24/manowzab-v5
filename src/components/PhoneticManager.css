@@ -1,0 +1,563 @@
+.phonetic-modal {
+  background: rgba(18, 18, 22, 0.98);
+  border-radius: 16px;
+  width: 680px;
+  max-width: 95%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.92) translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.phonetic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, rgba(0, 198, 255, 0.08), rgba(0, 114, 255, 0.08));
+  border-bottom: 1px solid rgba(0, 198, 255, 0.15);
+}
+
+.phonetic-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.phonetic-title i {
+  color: #00C6FF;
+  font-size: 1.1em;
+}
+
+/* Form Section */
+.phonetic-form {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(26, 26, 32, 0.6);
+}
+
+.form-title {
+  font-size: 1em;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-title i {
+  color: #00C6FF;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-label i {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.form-input {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: "Kanit", sans-serif;
+  font-size: 1em;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #00C6FF;
+  box-shadow: 0 0 16px rgba(0, 198, 255, 0.2);
+}
+
+.form-input::placeholder {
+  color: #555;
+}
+
+.form-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.phonetic-input {
+  border-color: rgba(0, 198, 255, 0.2);
+  background: rgba(0, 198, 255, 0.04);
+}
+
+.phonetic-input:focus {
+  border-color: #00C6FF;
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.25);
+}
+
+.form-hint {
+  font-size: 0.8em;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-hint i {
+  color: #00C6FF;
+  opacity: 0.6;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-phonetic-save {
+  background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.95em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+}
+
+.btn-phonetic-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.45);
+}
+
+.btn-phonetic-save:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-phonetic-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Preview Voice Button (Orange/Amber) */
+.btn-phonetic-preview {
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.95em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+.btn-phonetic-preview:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 152, 0, 0.45);
+}
+
+.btn-phonetic-preview:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-phonetic-preview:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-phonetic-cancel {
+  background: rgba(255, 255, 255, 0.06);
+  color: #aaa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.95em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-phonetic-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Autocomplete */
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.phonetic-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10010;
+  background: #1e1e24;
+  border: 1px solid rgba(0, 198, 255, 0.2);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  animation: dropdownSlide 0.15s ease-out;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.phonetic-autocomplete-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phonetic-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.phonetic-autocomplete-item:hover,
+.phonetic-autocomplete-item.active {
+  background: rgba(0, 198, 255, 0.1);
+}
+
+.phonetic-autocomplete-item.active {
+  border-left: 3px solid #00C6FF;
+  padding-left: 11px;
+}
+
+.suggestion-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.suggestion-uid {
+  color: #666;
+  font-size: 0.75em;
+  font-family: monospace;
+}
+
+/* Search Section */
+.phonetic-search {
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.search-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #555;
+  font-size: 0.9em;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 9px 14px 9px 36px;
+  border-radius: 8px;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.9em;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: rgba(0, 198, 255, 0.4);
+}
+
+.search-input::placeholder {
+  color: #555;
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.search-clear:hover {
+  color: #fff;
+}
+
+.phonetic-count {
+  color: #666;
+  font-size: 0.85em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Nickname List */
+.phonetic-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 24px 20px;
+}
+
+.phonetic-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.phonetic-empty i {
+  font-size: 2.5em;
+  opacity: 0.3;
+}
+
+.phonetic-empty-sub {
+  font-size: 0.85em;
+  color: #444;
+}
+
+/* Phonetic Item */
+.phonetic-item {
+  background: rgba(30, 30, 38, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.phonetic-item:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(40, 40, 50, 0.8);
+}
+
+.phonetic-item--editing {
+  border-color: rgba(0, 198, 255, 0.4) !important;
+  background: rgba(0, 198, 255, 0.05) !important;
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.08);
+}
+
+.phonetic-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.phonetic-item-nick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nick-label {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #fff;
+}
+
+.phonetic-badge {
+  background: linear-gradient(135deg, rgba(0, 198, 255, 0.12), rgba(0, 114, 255, 0.12));
+  color: #7dd3fc;
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 198, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.phonetic-badge i {
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.phonetic-item-uid {
+  font-size: 0.75em;
+  color: #555;
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.phonetic-item-uid i {
+  font-size: 0.9em;
+}
+
+/* Action Buttons */
+.phonetic-item-actions {
+  display: gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-action {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  transition: all 0.2s;
+}
+
+.btn-edit {
+  background: rgba(0, 198, 255, 0.1);
+  color: #00C6FF;
+  border: 1px solid rgba(0, 198, 255, 0.2);
+}
+
+.btn-edit:hover {
+  background: rgba(0, 198, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.btn-listen {
+  background: rgba(255, 152, 0, 0.1);
+  color: #FF9800;
+  border: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+.btn-listen:hover {
+  background: rgba(255, 152, 0, 0.25);
+  transform: scale(1.08);
+}
+
+.btn-delete {
+  background: rgba(211, 47, 47, 0.1);
+  color: #ef5350;
+  border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+.btn-delete:hover {
+  background: rgba(211, 47, 47, 0.25);
+  transform: scale(1.08);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .phonetic-modal {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .phonetic-header {
+    padding: 14px 16px;
+  }
+
+  .phonetic-title {
+    font-size: 1.1em;
+  }
+
+  .phonetic-form {
+    padding: 16px;
+  }
+
+  .phonetic-search {
+    padding: 12px 16px;
+  }
+
+  .phonetic-list {
+    padding: 10px 16px 20px;
+  }
+
+  .phonetic-item-nick {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
