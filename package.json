@@ -9,10 +9,15 @@
     "build:gh": "vite build --base=/ManowZab-V5/",
     "deploy:gh": "npm run build:gh && gh-pages -d dist",
     "deploy": "npm run build && wrangler pages deploy dist --project-name manowzab-v5",
+    "test": "vitest",
+    "test:run": "vitest run",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "canvas-confetti": "^1.9.4",
     "firebase": "^12.13.0",
     "framer-motion": "^12.38.0",
@@ -23,6 +28,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -31,8 +38,10 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "gh-pages": "^6.3.0",
     "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
     "vite": "^8.0.12",
     "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.6",
     "wrangler": "^4.90.0"
   }
 }

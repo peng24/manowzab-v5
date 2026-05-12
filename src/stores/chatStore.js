@@ -18,25 +18,33 @@ export const useChatStore = create((set, get) => ({
     }
 
     set((state) => {
-      const newMessages = [...state.messages, message];
       const newSeenMessageIds = { ...state.seenMessageIds, [message.id]: true };
+      
+      // Create new message object
+      const newMsgObj = {
+        id: message.id,
+        author: message.authorName,
+        comment: message.text,
+        videoTime: get().calculateVideoTime(message.timestamp),
+        messageTime: new Date(message.timestamp).toLocaleString("en-US"),
+        displayName: message.displayName || message.authorName,
+        realName: message.realName || message.displayName || message.authorName,
+        text: message.text,
+        timestamp: message.timestamp,
+        // Preserve all other properties from processMessage
+        ...message 
+      };
+
+      // Merge and Sort by timestamp
+      const allMessages = [...state.messages, newMsgObj].sort((a, b) => a.timestamp - b.timestamp);
+      
       const newFullChatLog = [
         ...state.fullChatLog,
-        {
-          id: message.id,
-          author: message.authorName,
-          comment: message.text,
-          videoTime: calculateVideoTime(message.timestamp),
-          messageTime: new Date(message.timestamp).toLocaleString("en-US"),
-          displayName: message.displayName || message.authorName,
-          realName: message.realName || message.displayName || message.authorName,
-          text: message.text,
-          timestamp: message.timestamp,
-        }
-      ];
+        newMsgObj
+      ].sort((a, b) => a.timestamp - b.timestamp);
 
       return {
-        messages: newMessages,
+        messages: allMessages,
         seenMessageIds: newSeenMessageIds,
         fullChatLog: newFullChatLog
       };

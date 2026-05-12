@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { createPortal } from 'react-dom';
 import { useSystemStore } from '../stores/systemStore';
 import { useChatStore } from '../stores/chatStore';
 import { useStockStore } from '../stores/stockStore';
@@ -33,20 +32,24 @@ const Header = () => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [shippingData, setShippingData] = useState({});
-  const [dropdownStyle, setDropdownStyle] = useState({});
   const simIntervalId = useRef(null);
+  const dropdownContainerRef = useRef(null);
 
   useEffect(() => {
     const unsubShipping = onValue(dbRef(db, "shipping"), (snapshot) => {
       setShippingData(snapshot.val() || {});
     });
 
-    const handleClickOutside = () => setShowDropdown(false);
-    document.addEventListener("click", handleClickOutside);
+    const handleClickOutside = (event) => {
+      if (dropdownContainerRef.current && !dropdownContainerRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       unsubShipping();
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
       if (simIntervalId.current) clearInterval(simIntervalId.current);
       if (videoId) localStorage.setItem("lastVideoId", videoId);
     };
@@ -67,19 +70,9 @@ const Header = () => {
     return "รอการเชื่อมต่อ";
   };
 
-  const toggleDropdown = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (!showDropdown) {
-      const btn = event.currentTarget;
-      const rect = btn.getBoundingClientRect();
-      setDropdownStyle({
-        position: "fixed",
-        top: `${rect.bottom + 5}px`,
-        right: `${window.innerWidth - rect.right}px`,
-        zIndex: "9999",
-      });
-    }
+  const toggleDropdown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setShowDropdown(!showDropdown);
   };
 
@@ -371,19 +364,23 @@ const Header = () => {
           {systemStore.useOnlineTts && <span style={{ marginLeft: '6px', fontSize: '1.1em', fontWeight: 'bold', fontFamily: 'monospace', filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.2))' }}>{systemStore.activeKeyIndex}</span>}
         </motion.button>
 
-        <div className="dropdown">
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-sim" onClick={toggleDropdown}>
+        <div className="dropdown" ref={dropdownContainerRef}>
+          <motion.button 
+            whileHover={{ scale: 1.05 }} 
+            whileTap={{ scale: 0.95 }} 
+            className="btn btn-sim" 
+            onClick={toggleDropdown}
+          >
             ⚡ Tools <i className="fa-solid fa-caret-down"></i>
           </motion.button>
           <AnimatePresence>
-            {showDropdown && createPortal(
+            {showDropdown && (
               <motion.div 
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
                 className="dropdown-content" 
-                style={dropdownStyle} 
-                onClick={(e) => e.stopPropagation()}
+                onClick={() => setShowDropdown(false)}
               >
                 <a onClick={handleDownloadCSV} className="menu-csv"><i className="fa-solid fa-file-csv"></i> บันทึกแชท (CSV)</a>
                 <a onClick={handleTestVoice} className="menu-voice"><i className="fa-solid fa-volume-high"></i> ทดสอบเสียง</a>
@@ -397,8 +394,7 @@ const Header = () => {
                 <a onClick={() => { openModal('noteEditor'); setShowDropdown(false); }} className="menu-note"><i className="fa-solid fa-note-sticky"></i> จัดการ Note</a>
                 <a onClick={handleForceUpdate} className="menu-update"><i className="fa-solid fa-rotate"></i> บังคับอัปเดต</a>
                 <a onClick={() => { openModal('phoneticManager'); setShowDropdown(false); }} className="menu-phonetic"><i className="fa-solid fa-volume-high"></i> จัดการคำอ่าน (TTS)</a>
-              </motion.div>,
-              document.body
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
