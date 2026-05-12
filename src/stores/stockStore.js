@@ -16,6 +16,23 @@ export const useStockStore = create((set, get) => ({
   stockSize: parseInt(localStorage.getItem('lastStockSize')) || 50,
   milestones: { fifty: false, eighty: false, hundred: false },
   currentUnsubscribe: null,
+  newOrders: new Set(),
+
+  addNewOrder: (id) => {
+    set((state) => {
+      const next = new Set(state.newOrders);
+      next.add(id);
+      return { newOrders: next };
+    });
+    // Remove highlight after 15 seconds
+    setTimeout(() => {
+      set((state) => {
+        const next = new Set(state.newOrders);
+        next.delete(id);
+        return { newOrders: next };
+      });
+    }, 15000);
+  },
 
   connectToStock: (videoId) => {
     const { currentUnsubscribe } = get();

@@ -110,6 +110,12 @@ export function useChatProcessor() {
         Toast.fire({ icon: "success", title: `✅ ตัดรหัส ${itemIds.join(", ")} ให้ ${oName} แล้ว` });
         chatStore.sendMessageToFirebase(systemStore.currentVideoId, { id: item.id, text: msg, messageRuns: extractMessageRuns(item), authorName: realName, displayName, phoneticName, realName, uid, avatar, color: stringToColor(uid), isAdmin, type: "buy", detectionMethod: "multi-buy", timestamp: new Date(item.snippet.publishedAt).getTime() });
         queueAudio("success", phoneticName, `${ttsMessage} ... ทั้งหมด ${itemIds.length} รายการ`);
+
+        // Add to new orders highlight
+        const { addNewOrder } = useStockStore.getState();
+        if (addNewOrder) {
+          itemIds.forEach(id => addNewOrder(id));
+        }
         return;
       }
     }
@@ -221,6 +227,10 @@ export function useChatProcessor() {
         }
         Toast.fire({ icon: "success", title: `✅ ตัดรหัส ${targetId} ให้ ${oName} แล้ว` });
         queueAudio("success", phoneticName, ttsMessage);
+        
+        // Add to new orders highlight
+        const { addNewOrder } = useStockStore.getState();
+        if (addNewOrder) addNewOrder(targetId);
       } finally { processingLocks.delete(targetId); }
     } else if (intent === "cancel" && targetId > 0) {
       const cI = stockStore.stockData[targetId]; 

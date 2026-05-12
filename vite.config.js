@@ -12,7 +12,7 @@ export default defineConfig({
       manifest: {
         name: 'Manowzab Command Center V5',
         short_name: 'Manowzab V5',
-        description: 'ระบบจัดการหลังบ้าน Manowzab (React Version)',
+        description: 'ระบบจัดการหลังบ้าน Manowzab (React Version 5.0.0)',
         theme_color: '#121212',
         background_color: '#0f172a',
         display: 'standalone',

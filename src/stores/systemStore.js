@@ -21,7 +21,7 @@ export const useSystemStore = create((set, getStore) => ({
   statusChat: "ok",
   currentKeyIndex: 0,
   myDeviceId: localStorage.getItem("device_id") || `device-${Date.now()}`,
-  version: "v4.29.5", // Hardcoded for now, can be imported if needed
+  version: "v5.0.0", // Hardcoded for now, can be imported if needed
 
   // Actions
   setIsConnected: (val) => set({ isConnected: val }),

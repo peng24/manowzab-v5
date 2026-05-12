@@ -199,7 +199,7 @@ const StockGrid = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 10 },
+    hidden: { opacity: 0, scale: 1, y: 10 },
     show: { opacity: 1, scale: 1, y: 0 }
   };
 
@@ -296,8 +296,13 @@ const StockGrid = () => {
                 key={i}
                 layout
                 variants={itemVariants}
-                whileHover={{ scale: 1.05, zIndex: 10, backgroundColor: "var(--bg-hover)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ zIndex: 10, backgroundColor: "var(--bg-hover)" }}
+                whileTap={{ scale: 1 }}
+                animate={newOrders.has(i) ? {
+                  backgroundColor: ["#1e1e1e", "#f1c40f", "#1e1e1e"],
+                  boxShadow: ["0 0 0px #f1c40f", "0 0 20px #f1c40f", "0 0 0px #f1c40f"],
+                  transition: { repeat: Infinity, duration: 1.5 }
+                } : {}}
                 className={`stock-item ${item.owner ? 'sold' : ''} ${newOrders.has(i) ? 'new-order' : ''} ${highlightedId === i ? 'highlight' : ''}`}
                 onClick={() => openQueueModal(i)}
                 id={`stock-${i}`}
